@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import pokemonList from "./Data";
 import Card from "./Card";
+import ScoreBoard from "./ScoreBoard";
 
 function PlaySection() {
   const [pokemonData, setPokemonData] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
 
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
@@ -30,21 +33,24 @@ function PlaySection() {
     return setIsClicked(false);
   }, [isClicked]);
 
-  const handleClick = () => {
+  const handleClick = (name) => {
+    console.log(name);
     setIsClicked(true);
+    setCurrentScore(currentScore + 1);
   };
 
   return (
     <>
+      <ScoreBoard currentScore={currentScore} bestScore={bestScore} />
       {pokemonData.map((pokemon) => {
         return (
-          <button key={JSON.stringify(pokemon.id)} onClick={handleClick}>
-            <Card
-              name={pokemon.name.toUpperCase()}
-              alt={JSON.stringify(pokemon.name)}
-              url={pokemon.sprites.front_default}
-            />
-          </button>
+          <Card
+            key={JSON.stringify(pokemon.id)}
+            onClick={() => handleClick(pokemon.name)}
+            name={pokemon.name.toUpperCase()}
+            alt={JSON.stringify(pokemon.name)}
+            url={pokemon.sprites.front_default}
+          />
         );
       })}
     </>
