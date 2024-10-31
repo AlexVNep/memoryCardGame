@@ -5,6 +5,7 @@
 .header,
 .name,
 .score,
-.high-score {
+.high-score,
+.text-message {
   font-family: "Pokemon Solid", sans-serif;
 }
