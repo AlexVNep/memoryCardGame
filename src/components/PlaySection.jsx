@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import pokemonList from "./Data";
 import Card from "./Card";
 import ScoreBoard from "./ScoreBoard";
+import fetchPokemonData from "./FetchData";
 
 function PlaySection() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -10,27 +10,14 @@ function PlaySection() {
   const [bestScore, setBestScore] = useState(0);
   const checkListRef = useRef([]); // Using useRef to persist checkList across renders
 
-  const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
-
   useEffect(() => {
-    const fetchPokemonData = async () => {
-      const promises = pokemonList.map((pokemon) =>
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`).then(
-          (response) => response.json()
-        )
-      );
+    const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
+    async function fetchData() {
+      const results = await fetchPokemonData(); //fetch data here
+      setPokemonData(shuffle(results));
+    }
 
-      try {
-        const results = await Promise.all(promises);
-        const shuffledResults = shuffle(results); // Shuffle before updating state
-        setPokemonData(shuffledResults);
-        console.log(results);
-      } catch (error) {
-        console.error("Error fetching Pokemon data:", error);
-      }
-    };
-
-    fetchPokemonData();
+    fetchData();
     return setIsClicked(false);
   }, [isClicked]);
 
