@@ -29,6 +29,7 @@ function PlaySection() {
       console.log(checkListRef.current);
       setIsClicked(true);
       setCurrentScore(currentScore + 1);
+      setMessage("");
       if (currentScore >= bestScore) {
         setBestScore(bestScore + 1);
       }
