@@ -42,20 +42,24 @@ function PlaySection() {
   };
 
   return (
-    <>
-      <ScoreBoard currentScore={currentScore} bestScore={bestScore} />
+    <div className="grid grid-rows-3 grid-cols-6 gap-4 justify-items-center items-center">
+      <div className="h-full w-full col-span-6 bg-pokeBlack text-white text-center py-6">
+        <ScoreBoard currentScore={currentScore} bestScore={bestScore} />
+      </div>
+
       {pokemonData.map((pokemon) => {
         return (
-          <Card
-            key={JSON.stringify(pokemon.id)}
-            onClick={() => handleClick(pokemon.name)}
-            name={pokemon.name.toUpperCase()}
-            alt={JSON.stringify(pokemon.name)}
-            url={pokemon.sprites.front_default}
-          />
+          <div key={JSON.stringify(pokemon.id)} className="">
+            <Card
+              onClick={() => handleClick(pokemon.name)}
+              name={pokemon.name.toUpperCase()}
+              alt={JSON.stringify(pokemon.name)}
+              url={pokemon.sprites.front_default}
+            />
+          </div>
         );
       })}
-    </>
+    </div>
   );
 }
 

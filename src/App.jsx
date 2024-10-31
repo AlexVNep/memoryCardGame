@@ -4,10 +4,10 @@ import PlaySection from "./components/PlaySection";
 
 function App() {
   return (
-    <>
+    <div className="">
       <Header />
       <PlaySection />
-    </>
+    </div>
   );
 }
 

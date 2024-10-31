@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header,
+.name,
+.score,
+.high-score {
+  font-family: "Pokemon Solid", sans-serif;
+}
