@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import pokemonList from "./Data";
 import Card from "./Card";
 import ScoreBoard from "./ScoreBoard";
@@ -8,6 +8,7 @@ function PlaySection() {
   const [isClicked, setIsClicked] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const checkListRef = useRef([]); // Using useRef to persist checkList across renders
 
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
@@ -34,9 +35,23 @@ function PlaySection() {
   }, [isClicked]);
 
   const handleClick = (name) => {
-    console.log(name);
-    setIsClicked(true);
-    setCurrentScore(currentScore + 1);
+    if (!checkListRef.current.includes(name)) {
+      checkListRef.current.push(name);
+      console.log(checkListRef.current);
+      setIsClicked(true);
+      setCurrentScore(currentScore + 1);
+      if (currentScore >= bestScore) {
+        setBestScore(bestScore + 1);
+      }
+      if (checkListRef.current.length === 12) {
+        console.log("You win");
+        setCurrentScore(0);
+      }
+    } else {
+      checkListRef.current = [];
+      setCurrentScore(0);
+      console.log("Already clicked:", name);
+    }
   };
 
   return (
